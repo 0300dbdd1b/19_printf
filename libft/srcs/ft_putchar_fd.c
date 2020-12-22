@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naddino <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: naddino <naddino@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 20:54:19 by naddino           #+#    #+#             */
-/*   Updated: 2020/01/09 14:50:39 by naddino          ###   ########.fr       */
+/*   Updated: 2020/12/17 13:49:50 by naddino          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,4 +15,5 @@
 void	ft_putchar_fd(char c, int fd)
 {
 	write(fd, &c, 1);
+	g_nbrchar++;
 }

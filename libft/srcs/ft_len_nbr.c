@@ -1,29 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get_next_line.h                                 :+:      :+:    :+:   */
+/*   ft_len_nbr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: naddino <naddino@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/12 14:16:13 by naddino           #+#    #+#             */
-/*   Updated: 2020/12/17 13:59:57 by naddino          ###   ########.fr       */
+/*   Created: 2020/12/17 13:25:58 by naddino           #+#    #+#             */
+/*   Updated: 2020/12/17 13:57:33 by naddino          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_GET_NEXT_LINE_H
-# define FT_GET_NEXT_LINE_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <limits.h>
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
+int	ft_len_nbr(int nbr, int base)
+{
+	long int	n;
+	int			i;
 
-int		get_next_line(int fd, char **line);
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 64
-# endif
-
-#endif
+	n = nbr;
+	i = 0;
+	if (n < 0)
+	{
+		i = 1;
+		n = n * -1;
+	}
+	while (n >= base)
+	{
+		n = n / base;
+		i++;
+	}
+	return (i + 1);
+}

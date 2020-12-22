@@ -71,6 +71,10 @@ SRCNAME		= 	ft_memset.c			\
 				ft_lstclear.c		\
 				ft_lstiter.c		\
 				ft_lstmap.c			\
+				ft_abs.c			\
+				ft_len_nbr_u.c		\
+				ft_len_nbr.c		\
+				ft_putnbr_u_fd.c	\
 
 GNL_SRC		=	ft_get_next_line.c			\
 

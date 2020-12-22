@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get_next_line.h                                 :+:      :+:    :+:   */
+/*   ft_abs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: naddino <naddino@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/12 14:16:13 by naddino           #+#    #+#             */
-/*   Updated: 2020/12/17 13:59:57 by naddino          ###   ########.fr       */
+/*   Created: 2020/12/17 12:35:38 by naddino           #+#    #+#             */
+/*   Updated: 2020/12/17 13:55:54 by naddino          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_GET_NEXT_LINE_H
-# define FT_GET_NEXT_LINE_H
+int	ft_abs(int nbr)
+{
+	long int n;
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <limits.h>
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
-
-int		get_next_line(int fd, char **line);
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 64
-# endif
-
-#endif
+	n = nbr;
+	if (n < 0)
+		return (-1 * n);
+	else
+		return (n);
+}

@@ -1,52 +1,91 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: naddino <naddino@student.s19.be>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/17 14:01:06 by naddino           #+#    #+#             */
+/*   Updated: 2020/12/18 01:24:08 by naddino          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-
-int ft_check_format(const char *format, va_list *argptr)
+void	ft_print_space_format(int nbr, int zero, int neg)
 {
-	size_t	i;
-	char 	*flags;
-	int 	token;
+	char c;
 
-	flags = FLAGS_CHARSET;
+	c = (zero == 1) ? '0' : ' ';
+	if (neg && zero)
+		ft_putchar_fd('-', 1);
+	if (!zero && neg && g_prec >= g_len && g_len != 0)
+		nbr--;
+	while (nbr--)
+		ft_putchar_fd(c, 1);
+}
+
+int		ft_check_flag(char c)
+{
+	int		i;
+
 	i = 0;
-
-	while(format[i])
+	while (FLAGSCHARSET[i])
 	{
-		if (i != 0 && format[i - 1] == '%')
-		{
-			token = (int)(ft_strchr(flags, format[i]) - flags);
-			if (token != -1)
-				(*fun_tab[token])(argptr);
-		}
-		else if (format[i] != '%')
-			write(1, &format[i], 1);
+		if (FLAGSCHARSET[i] == c)
+			return (i);
 		i++;
 	}
+	return (-1);
+}
+
+int		ft_is_flag(const char *format, int i, int begin)
+{
+	if (begin)
+	{
+		while (ft_isdigit(format[i]) || format[i] == '-' || format[i] == '.' ||
+		format[i] == '+' || format[i] == ' ' || format[i] == '*')
+			i++;
+	}
 	return (i);
-
 }
 
-int	ft_printf(const char *format, ...)
+void	ft_check_format(const char *format, va_list argp)
 {
-	va_list	argptr;
-	int		writed;
+	int			i;
+	int			begin;
 
-	va_start(argptr, format);
-	writed = ft_check_format(format, &argptr);
-	va_end(argptr);
-	return (writed);
+	i = 0;
+	while (format[i])
+	{
+		ft_reset();
+		begin = (format[i] == '%') ? 1 : 0;
+		if (format[i] == '%' && ft_strlen(format) > 1)
+			i++;
+		i = ft_is_flag(format, i, begin);
+		if ((i != 0 && (ft_isdigit(format[i - 1]) || format[i - 1] == '*' ||
+		format[i - 1] == '.') && begin && format[i] == '%'))
+			ft_print_space(format, i - 1, argp);
+		if (ft_check_flag(format[i]) != -1 && begin && format[i - 1] == '*')
+			ft_stock_star(format, i - 1, argp);
+		if (ft_check_flag(format[i]) != -1 && begin &&
+		(ft_isdigit(format[i - 1]) || format[i - 1] == '.'))
+			ft_stock(format, i - 1, argp);
+		if (ft_check_flag(format[i]) != -1 && begin)
+			g_tab_func[ft_check_flag(format[i])](argp);
+		else if (format[i] != '%' || (format[i] == '%' && format[i - 1] == '%'))
+			ft_putchar_fd(format[i], 1);
+		i++;
+	}
 }
 
-int main(void)
+int		ft_printf(const char *format, ...)
 {
-	int x = -9000888888888800880;
-	char *str = " Coucou";
+	va_list	argp;
 
-	printf("x = %x\n", x);
-	ft_printf("x = %x\n", x);
-
-	printf("str = %s\n", str);
-	ft_printf("str = %s\n", str);
-
-
+	g_nbrchar = 0;
+	va_start(argp, format);
+	ft_check_format(format, argp);
+	va_end(argp);
+	return (g_nbrchar);
 }

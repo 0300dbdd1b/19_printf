@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get_next_line.h                                 :+:      :+:    :+:   */
+/*   ft_putnbr_u_fd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: naddino <naddino@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/12 14:16:13 by naddino           #+#    #+#             */
-/*   Updated: 2020/12/17 13:59:57 by naddino          ###   ########.fr       */
+/*   Created: 2020/12/17 13:19:53 by naddino           #+#    #+#             */
+/*   Updated: 2020/12/17 13:57:22 by naddino          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_GET_NEXT_LINE_H
-# define FT_GET_NEXT_LINE_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <limits.h>
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
-
-int		get_next_line(int fd, char **line);
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 64
-# endif
-
-#endif
+void	ft_putnbr_u_fd(unsigned int n, int fd)
+{
+	if (fd >= 0 && fd < OPEN_MAX)
+	{
+		if (n >= 10)
+			ft_putnbr_fd((n / 10), fd);
+		ft_putchar_fd(((n % 10) + 48), fd);
+	}
+}

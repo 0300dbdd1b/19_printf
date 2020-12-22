@@ -6,21 +6,51 @@
 /*   By: naddino <naddino@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 23:10:59 by naddino           #+#    #+#             */
-/*   Updated: 2020/10/16 23:12:14 by naddino          ###   ########.fr       */
+/*   Updated: 2020/12/18 01:22:49 by naddino          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void			ft_putnbr_base_fd(int nbr, char *base, int fd)
+long unsigned int	ft_size_base(char *base)
 {
-	unsigned int i;
+	int i;
+	int j;
 
-	i = nbr;
-	if (ft_check_base(base) != 0)
+	i = 0;
+	while (base[i])
 	{
-		if (i >= ft_strlen(base))
-			ft_putnbr_base(i / ft_strlen(base), base);
-		ft_putchar_fd(base[i % ft_strlen(base)], fd);
+		if (base[i] == '+' || base[i] == '-')
+			return (0);
+		j = i;
+		while (base[j])
+		{
+			if (base[j + 1] != '\0' && base[j + 1] == base[i])
+				return (0);
+			j++;
+		}
+		i++;
 	}
+	if (i < 2)
+		return (0);
+	return (i);
+}
+
+void				ft_putnbr_base_fd(size_t nbr, char *base, int fd)
+{
+	long unsigned int nb;
+
+	nb = nbr;
+	if (ft_size_base(base) == 0)
+	{
+		return ;
+	}
+	if (nb < 0)
+	{
+		ft_putchar_fd('-', fd);
+		nb = nb * -1;
+	}
+	if (nb >= ft_size_base(base))
+		ft_putnbr_base_fd((nb / ft_size_base(base)), base, fd);
+	ft_putchar_fd(base[nb % ft_size_base(base)], fd);
 }

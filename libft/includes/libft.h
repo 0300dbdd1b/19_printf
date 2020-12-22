@@ -6,7 +6,7 @@
 /*   By: naddino <naddino@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 19:37:55 by naddino           #+#    #+#             */
-/*   Updated: 2020/10/16 23:25:38 by naddino          ###   ########.fr       */
+/*   Updated: 2020/12/17 15:52:17 by naddino          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ typedef unsigned long long	t_ull;
 # define OCT_BASE "012345678"
 # define DEC_BASE "0123456789"
 # define HEX_BASE "0123456789ABCDEF"
+
+int g_nbrchar;
 
 /*
 **			===== Premiere Partie =====
@@ -76,7 +78,7 @@ void		ft_putchar_fd(char c, int fd);
 void		ft_putstr_fd(char *s, int fd);
 void		ft_putendl_fd(char const *s, int fd);
 void		ft_putnbr_fd(int n, int fd);
-void		ft_putnbr_base_fd(int nbr, char *base, int fd);
+void		ft_putnbr_base_fd(size_t nbr, char *base, int fd);
 /*
 **			===== Partie Bonus =====
 */
@@ -103,5 +105,9 @@ t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 */
 
 t_ull		ft_strtoull(const char *str);
+int			ft_abs(int nbr);
+int			ft_len_nbr(int nbr, int base);
+int			ft_len_nbr_u(unsigned int nbr, unsigned int base);
+void		ft_putnbr_u_fd(unsigned int n, int fd);
 
 #endif
